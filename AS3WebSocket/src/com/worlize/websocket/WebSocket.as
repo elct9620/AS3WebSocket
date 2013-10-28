@@ -16,15 +16,17 @@
 
 package com.worlize.websocket
 {
-	import com.adobe.crypto.SHA1;
+	//import com.adobe.crypto.SHA1;
 	import com.adobe.net.URI;
 	import com.adobe.net.URIEncodingBitmap;
 	import com.adobe.utils.StringUtil;
+	import com.hurlant.crypto.hash.SHA1;
 	import com.hurlant.crypto.tls.TLSConfig;
 	import com.hurlant.crypto.tls.TLSEngine;
 	import com.hurlant.crypto.tls.TLSSecurityParameters;
 	import com.hurlant.crypto.tls.TLSSocket;
 	import com.hurlant.util.Base64;
+	import com.hurlant.util.Hex;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -847,7 +849,12 @@ package com.worlize.websocket
 						serverExtensions = serverExtensions.concat(extensionsThisLine);
 					}
 					else if (lcName === 'sec-websocket-accept') {
-						var expectedKey:String = SHA1.hashToBase64(base64nonce + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11");
+						//var expectedKey:String = SHA1.hashToBase64(base64nonce + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11");
+						var handleHash:String = base64nonce.concat("258EAFA5-E914-47DA-95CA-C5AB0DC85B11");
+						var sha1:SHA1 = new SHA1;
+						var byteArray:ByteArray = new ByteArray();
+						byteArray.writeUTFBytes(handleHash);
+						var expectedKey:String = Base64.encodeByteArray(sha1.hash(byteArray));
 						if (debug) {
 							logger("Expected Sec-WebSocket-Accept value: " + expectedKey);
 						}
