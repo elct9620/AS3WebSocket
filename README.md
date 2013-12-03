@@ -81,3 +81,7 @@ Usage Example
         trace("Got binary message of length " + event.message.binaryData.length);
       }
     }
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/elct9620/as3websocket/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
